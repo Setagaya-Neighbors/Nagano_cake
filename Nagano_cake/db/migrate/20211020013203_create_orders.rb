@@ -7,7 +7,7 @@ class CreateOrders < ActiveRecord::Migration[5.2]
       # FK
 
       # column
-      t.intger  :postal_code,     :null => false
+      t.integer :postal_code,     :null => false
       t.string  :address,         :null => false
       t.string  :name,            :null => false
       t.integer :postage,         :null => false
@@ -19,10 +19,5 @@ class CreateOrders < ActiveRecord::Migration[5.2]
       # column
 
     end
-
-    # indexを張る
-    add_index :orders, :id
-    # indexを張る
-
   end
 end
