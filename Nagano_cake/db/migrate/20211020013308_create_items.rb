@@ -3,7 +3,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
     create_table :items do |t|
 
       #FK
-       t.reference :genre, foreign_ket: true
+       t.reference :genre, foreign_key: true
       #FK
 
       #追記カラム
