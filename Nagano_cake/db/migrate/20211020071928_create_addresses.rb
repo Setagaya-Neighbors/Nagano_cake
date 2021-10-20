@@ -2,18 +2,18 @@ class CreateAddresses < ActiveRecord::Migration[5.2]
   def change
     create_table :addresses do |t|
       
-      #FK#
+    #FK
        t.reference :customer_id, foreign_key: true
-      #FK#
+    #FK
       
-      #追記カラム＃
+    #追記カラム
       t.string  :name,         null: false
       t.string  :postal_code,  null: false
       t.string  :address,      null: false
-　　　#追記カラム＃
+　　#追記カラム
 　　　t.datetime :created_at
-      t.datetime :update_at
-      #ここまで
+　　　t.datetime :update_at
+    #ここまで
       t.timestamps
     end
   end
