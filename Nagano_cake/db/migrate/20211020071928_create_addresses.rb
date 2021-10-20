@@ -7,7 +7,6 @@ class CreateAddresses < ActiveRecord::Migration[5.2]
       #FK#
       
       #追記カラム＃
-      t.integer :customer_id,  null: false
       t.string  :name,         null: false
       t.string  :postal_code,  null: false
       t.string  :address,      null: false
@@ -15,6 +14,7 @@ class CreateAddresses < ActiveRecord::Migration[5.2]
 　　　t.datetime :created_at
       t.datetime :update_at
       #ここまで
+      t.timestamps
     end
   end
 end
