@@ -7,7 +7,7 @@ class Public::CartItemsController < ApplicationController
       @item_in_cart = Cartitem.find_by(customer_id: current_customer.id, item_id: @item.id) #trueの場合、既にカートに入っている同itemの個数と、今し方カートに入れたitemの個数を合算
       @item_in_cart.quantity = @item_in_cart.quantity + @cart_item.quantity
       flash[:createdflag] = true
-    else                                                                                     #falseの場合、レコードを新規作成
+    elsif                                                                                     #falseの場合、レコードを新規作成
       @cart_item.customer_id = current_customer.id
       @cart_item.item_id = @item.id
       @cart_item.save(Cartitem_params)
