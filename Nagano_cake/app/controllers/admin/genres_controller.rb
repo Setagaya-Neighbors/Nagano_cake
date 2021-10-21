@@ -1,18 +1,18 @@
 class Admin::GenresController < ApplicationController
 
   def index
-    @genre = Genre.all
+    @genres = Genre.all
     @genre = Genre.new
-    @items = Item.all
-    @item = Item.new
   end
 
   def create
-     @item = Item.new(item_params)
+     @genre = Genre.new(genre_params)
      @item.genre_id = current_genre.id
     if @item.save
+
+      #createflag＝trueは、ジャンルを作りShowページに飛んだときに動くように定義
       flash[:createdflag] = true
-      redirect_to item_path(@item.id)
+      redirect_to admin_item_path(@item.id)
     else
       @items=Item.all
       render:index
@@ -21,9 +21,7 @@ class Admin::GenresController < ApplicationController
 
   def edit
       @genre = Genre.find(params[:id])
-    if @genre != current_genre
-      redirect_to genre_path(current_genre)
-    end
+
   end
 
   def update
@@ -38,6 +36,10 @@ class Admin::GenresController < ApplicationController
       render:edit
 
     end
+  end
+
+  def item_params
+    params.require(:item, :genre).permit(:name, :description ,:image_id, :price, :is_active)
   end
 
 end
