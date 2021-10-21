@@ -15,7 +15,7 @@ class Admin::ItemsController < ApplicationController
      @item = Item.new(item_params)
     if @item.save
       flash[:createdflag] = true
-      redirect_to item_path(@item.id)
+      redirect_to admin_item_path(@item.id)
     else
       @items=Item.all
       render:index
