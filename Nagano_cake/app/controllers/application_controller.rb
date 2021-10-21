@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
       
-     params = [ :last_name,:first_name,:last_name_ruby,:first_name_ruby,:postal_code,:address,:phone_number,:encrypted_password,:password_confirmation]
+     params = [ :last_name,:first_name,:last_name_ruby,:first_name_ruby,:postal_code,:address,:phone_number,:encrypted_password,:encrypted_password_confirmation]
   
   
   
