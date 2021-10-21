@@ -10,8 +10,6 @@ class Admin::ItemsController < ApplicationController
 
   def create
 
-    @item_image.save
-
      @item = Item.new(item_params)
     if @item.save
       flash[:createdflag] = true
@@ -50,7 +48,8 @@ class Admin::ItemsController < ApplicationController
 private
   # ストロングパラメータ
   def item_params
-    params.require(:item).permit(:name, :description)
+   params.require(:item).permit(:name, :description ,:image_id, :price, :is_active)
+   params.require(:genre).permit(:name)
   end
 
 end
