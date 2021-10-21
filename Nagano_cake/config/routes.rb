@@ -1,13 +1,21 @@
 Rails.application.routes.draw do
 
-# devise
-# /devise
-
+    # devise
+    devise_for :customers, controllers: {
+    registrations: 'public/registrations',
+    sessions:      'public/sessions',
+    }
+    
+    devise_for :admin, controllers: {
+    sessions:      'admin/sessions',
+    }
+    # /devise
+    
   # adminのrouting
   namespace :admin do
 
     # HomesController関連
-    root "homes#top"
+    root to "homes#top"
     # /HomesController関連
 
     # ItemsController関連
