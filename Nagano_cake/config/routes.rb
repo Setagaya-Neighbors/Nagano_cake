@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
 # devise
 # /devise
 
@@ -68,3 +69,4 @@ Rails.application.routes.draw do
   # /publicのrouting
 
 end
+
