@@ -2,7 +2,7 @@ class Public::CartItemsController < ApplicationController
 
   def create #ItemsControllerのIndexViewよりアクセス
     @item = Item.find(params[:id])
-    @cart_item = Cartitem.new
+    @cart_item = Cartitem.new(Cartitem_params)
     if Cartitem.exists?(customer_id: current_customer.id, item_id: @item.id)                #そのcustomerが同じitemを既にカートに入れているか判定
       @item_in_cart = Cartitem.find_by(customer_id: current_customer.id, item_id: @item.id) #trueの場合、既にカートに入っている同itemの個数と、今し方カートに入れたitemの個数を合算
       @item_in_cart.quantity = @item_in_cart.quantity + @cart_item.quantity
@@ -10,7 +10,7 @@ class Public::CartItemsController < ApplicationController
     else                                                                                     #falseの場合、レコードを新規作成
       @cart_item.customer_id = current_customer.id
       @cart_item.item_id = @item.id
-      @cart_item.save(Cartitem_params)
+      @cart_item.save
       flash[:createdflag] = false                                                            #redirect先でtrueパターンとは別のメッセージを表示させるため、便宜的にfalseと設定
     end
 
