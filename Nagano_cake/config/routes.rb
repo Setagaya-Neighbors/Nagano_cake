@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   namespace :admin do
 
     # HomesController関連
-    root to "homes#top"
+    root to: "homes#top"
     # /HomesController関連
 
     # ItemsController関連
