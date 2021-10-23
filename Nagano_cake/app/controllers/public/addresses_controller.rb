@@ -1,13 +1,13 @@
 class Public::AddressesController < ApplicationController
   def index
-    @address = Address.all
+    @addresses = Address.all
     @new_address = Address.new
   end
 
   def create
     @address = Address.new(address_params)
     if @address.save
-      redirect_to address_path(@book), notice: "You have created address successfully."
+      redirect_to public_address_path(@address), notice: "You have created address successfully."
     else
       @address = Address.all
       render 'index'
@@ -16,19 +16,18 @@ class Public::AddressesController < ApplicationController
 
   def edit
     @address = Address.find(params[:id])
-    @new_address = Address.new(address_params)
   end
 
   def update
      @address = Address.find(params[:id])
      @address.update(address_params)
-     redirect_to address_path(@address), notice: "You have updated address successfully."
+     redirect_to public_address_path(@address), notice: "You have updated address successfully."
   end
 
   def destroy
     @address = Address.find(params[:id])
     @address.destroy
-    redirect_to addresses_path
+    redirect_to public_addresses_path, notice: "You have destroyed address successfully."
   end
   
   private
