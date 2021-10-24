@@ -24,9 +24,9 @@ class Public::CustomersController < ApplicationController
       redirect_to public_customer_path(@customer.id)
     else
       render:edit
-    end 
+    end
   end
-  
+
   private
   # ストロングパラメータ
   def customer_params
