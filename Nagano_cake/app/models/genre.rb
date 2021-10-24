@@ -2,8 +2,8 @@ class Genre < ApplicationRecord
 
   validates :name, presence: true
 
-　# アソシエーション
+ # アソシエーション
   has_many :items, dependent: :destroy
-　#　アソシエーション
+ # アソシエーション
 
 end
