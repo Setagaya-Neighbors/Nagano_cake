@@ -15,7 +15,7 @@
 
 
           <h4 style="background-color: #d3d3d3; display:inline;">　ジャンル編集　</h4>
-            <%= form_with model:@genre,url:"/admin/genres/#{@genre.id}/edit", local:true do |f| %>
+            <%= form_with model:@genre,url:"/admin/genres/#{@genre.id}", local:true do |f| %>
               <br>ジャンル名
                 <span style="margin-left:50px"><%= f.text_field :name %></span>
                 <span style="margin-left:50px"><%= f.submit '変更を保存', class: "btn btn-success" %></span>

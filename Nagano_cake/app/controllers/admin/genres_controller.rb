@@ -6,7 +6,7 @@ class Admin::GenresController < ApplicationController
   end
 
   def create
-     @genre = Genre.new(item_params)
+     @genre = Genre.new(genre_params)
 
     if @genre.save
 
@@ -26,21 +26,23 @@ class Admin::GenresController < ApplicationController
 
   def update
        @genre = Genre.find(params[:id])
+
     if @genre.update(genre_params)
       flash[:createdflag] = true
       flash[:notice]= "You have updated user successfully."
-      redirect_to genre_path(@genre.id)
+
+      redirect_to admin_genres_path(@genre.id)
 
     else
-
+      #updateを失敗すると編集ページへ
       render:edit
 
     end
   end
 
-  def item_params
-    params.permit(:name, :description ,:image_id, :price, :is_active)
-
+ private
+  def genre_params
+    params.require(:genre).permit(:name)
   end
 
 
