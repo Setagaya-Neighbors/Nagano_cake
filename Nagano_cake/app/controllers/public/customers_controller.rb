@@ -1,30 +1,28 @@
 class Public::CustomersController < ApplicationController
   def show
-    @customer = Customer.find(params[:id])
+    @customer = Customer.find_by(current_customer[:id])
   end
 
   def cancel
-    @customer = Customer.find(name: params[:name])
   end
 
   def withdraw
-    @customer = Customer.find(name: params[:name])
-    @user.update(is_valid: false)
+    @customer = Customer.find_by(current_customer[:id])
+    @user.update(is_deleted: false)
     reset_session
-    redirect_to public_customer_path
+    redirect_to root_path
   end
 
   def edit
-    @customer = Customer.find(params[:id])
+    @customer = Customer.find_by(current_customer[:id])
   end
 
   def update
-     @customer = Customer.find(params[:id])
-    if customer.update(customer_params)
+    @customer = Customer.find_by(current_customer[:id])
+    if @customer.update(customer_params)
       flash[:createdflag] = true
-      redirect_to public_customer_path(customer.id)
+      redirect_to public_customer_path(@customer.id)
     else
-      @customer=customer
       render:edit
     end 
   end
@@ -32,7 +30,6 @@ class Public::CustomersController < ApplicationController
   private
   # ストロングパラメータ
   def customer_params
-   params.require(:customer).permit(:last_name, :first_name, :last_name_ruby, :first_name_ruby, :email, :postal_code, :address, :phone_number, :encrypted_password, :is_deleted)
-   params.require(:address).permit(:name, :address, :postal_code)
+   params.require(:customer).permit(:last_name, :first_name, :last_name_ruby, :first_name_ruby, :email, :postal_code, :address, :phone_number, :is_deleted)
   end
 end
