@@ -6,11 +6,13 @@ class Admin::ItemsController < ApplicationController
 
   def new
      @item = Item.new
+     @genre = Genre.all
   end
 
   def create
 
      @item = Item.new(item_params)
+
     if @item.save
       flash[:createdflag] = true
       redirect_to admin_item_path(@item.id)
@@ -22,6 +24,7 @@ class Admin::ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @genre = Genre.find(params[:id])
 
   end
 
@@ -48,8 +51,9 @@ class Admin::ItemsController < ApplicationController
 private
   # ストロングパラメータ
   def item_params
-   params.require(:item).permit(:name, :description ,:image_id, :price, :is_active)
-   params.require(:genre).permit(:name)
+   params.require(:item).permit(:name, :description ,:image, :price, :is_active, :genre_id)
+
   end
+
 
 end

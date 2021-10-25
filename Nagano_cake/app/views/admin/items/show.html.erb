@@ -1,0 +1,66 @@
+<div class='container px-5 px-sm-0'>
+
+  <div class='row'>
+    <h2>商品詳細</h2>
+    <div class='col-md-3'>
+    <tr> <%= attachment_image_tag @item, :image, :size => '69x37' %></tr>
+    </div>
+
+
+    <div class='col-md-8 offset-md-1'>
+
+    <% if flash[:createdflag] == true then %>
+    <p>You have created item successfully.</p>
+    <% end %>
+
+    <table>
+            <%= form_with model: @item, url: admin_items_path, local:true do |f| %>
+
+            <tr>
+              <th>商品名</th>
+              <th>　　</th>
+              <th><%= @item.name%></th>
+            </tr>
+
+            <tr><th>　</th></tr>
+
+            <tr>
+              <th>商品説明</th>
+              <th>　　</th>
+              <th><%= @item.description %></th>
+            </tr>
+
+            <tr><th>　</th></tr>
+
+            <tr>
+              <th>ジャンル</th>
+              <th>　　</th>
+              <th><%= @item.genre.name if @item.genre.present? %></th>
+            </tr>
+
+            <tr><th>　</th></tr>
+
+            <tr>
+              <th>税抜き価格</th>
+              <th>　　</th>
+              <th>(<%= @item.price%>)円</th>
+            </tr>
+
+            <tr><th>　</th></tr>
+
+            <tr>
+              <th>販売ステータス</th>
+              <th>　　</th>
+              <th>
+                <%= f.hidden_field :is_active %>
+                <%= @item.is_active %>
+              </th>
+            </tr>
+          <%end%>
+              </table>
+
+
+
+    </div>
+  </div>
+</div>
