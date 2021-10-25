@@ -15,7 +15,7 @@
           <h4 style="background-color: #d3d3d3; display:inline;">　ジャンル一覧・追加　</h4>
             <%= form_with model:@genre, url: "/admin/genres", local:true do |f| %>
               <br>ジャンル名
-                <span style="margin-left:50px"><%= f.text_field :name %></span>
+                <span style="margin-left:50px"><%= f.text_field :name,placeholder: "ジャンル名"%></span>
                 <span style="margin-left:50px"><%= f.submit '新規登録', class: "btn btn-success" %></span>
               </br>
             <% end %>
