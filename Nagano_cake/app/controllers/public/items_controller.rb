@@ -2,13 +2,12 @@ class Public::ItemsController < ApplicationController
 
   def index
      @items = Item.all
-     @cart_items = Cart_item.all
+     @cart_items = CartItem.all
 
   end
 
   def show
     @item = Item.find(params[:id])
-    
   end
 
   private

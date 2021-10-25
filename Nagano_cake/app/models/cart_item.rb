@@ -6,7 +6,7 @@ class CartItem < ApplicationRecord
 
   # 価格の合計
   def sum_of_price
-    item.price * quantity
+    item.price * quantity * 1.08
   end
   # /価格の合計
 

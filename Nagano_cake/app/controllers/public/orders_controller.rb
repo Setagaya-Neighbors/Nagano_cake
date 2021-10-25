@@ -32,7 +32,7 @@ class Public::OrdersController < ApplicationController
       @order.postage        = 800
       @order.payment        = @infomaion.payment
       @order.status         = "入金待ち"
-      @order.billing_amount = @infomaion.total
+      @order.billing_amount = @infomaion.total + @order.postage
 
       # 配送先のラジオボタンの選択により、Orderの配送先住所の保存対象を分岐する
 

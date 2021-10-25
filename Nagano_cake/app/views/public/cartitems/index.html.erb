@@ -5,9 +5,11 @@
       <h6>ショッピングカート</h6>
     </div>
 
-    <button button type="button" class="col-md-2 offset-md-8 btn btn-danger">
-      カートを空にする
-    </button>
+    <%= link_to public_destroy_all_cart_items_path do %>
+      <button button type="button" class="col-md-2 offset-md-8 btn btn-danger">
+        カートを空にする
+      </button>
+    <% end %>
 
 </div>
 
@@ -28,13 +30,29 @@
                 <th scope="col", style="width: 15%"></th>
             </tr>
 
+            <% @cart_items.zip(@items, @total).each do {|cart_item, item, total| %>
             <tr>
-                <td><span>画像</span> <span>チョコバナナミルフィーユ</span></td>
-                <td>1,100</td>
-                <td><span>1</span> <button button type="button"n class="btn btn-success">変更</button></td>
-                <td>1,100</td>
-                <td><button button type="button" class="btn btn-danger">削除する</button></td>
+                <td>
+                  <span><%= image_tag item.image_id, :size => '50x50' %></span>
+                  <span><%= item.name %></span>
+                </td>
+                <td><%= item.price %></td>
+                <td>
+                  <span>
+                    <%= form_with model:cart_item, url: public_cart_item_path(cart_item.id), method: :patch, local:true do |f| %>
+                      <%= f.select :quantity, [['1',1], ['2',2], ['3',3], ['4',4], ['5',5], ['6',6], ['7',7], ['8',8], ['9',9], ['10',10]] %>
+                    <% end %>
+                    <%= f.submit '変更', class: "btn btn-success" %>
+                  </span>
+                </td>
+                <td><%= "#{item.price * cart_item.quantity}" %></td>
+                <td>
+                  <% link_to public_cart_item_path(cart_item.id) do %>
+                    <button button type="button" class="btn btn-danger">削除する</button>
+                  <% end %>
+                </td>
             </tr>
+            <% end %>
 
         </table>
 
@@ -47,15 +65,17 @@
 <div class="container">
   <div class="row">
 
-      <button button type="button" class="col-md-2 offset-md-1 btn btn-primary btn-sm">
-        買い物を続ける
-      </button>
+      <%= link_to  public_items_path do %>
+        <button button type="button" class="col-md-2 offset-md-1 btn btn-primary btn-sm">
+          買い物を続ける
+        </button>
+      <%= end %>
 
     <div class="col-md-3 offset-md-6">
       <table border="2" class="table border border-dark">
           <tr>
             <th scope="row", style="width: 50%">合計金額</th>
-            <td>1,100</td>
+            <td>total.sum</td>
           </tr>
       </table>
     </div>
@@ -70,9 +90,11 @@
 <div class="container">
   <div class="row">
     <div class="col-md-2 mx-auto">
-      <button  button type="button" class="btn btn-success">
-        <strong>情報入力に進む</strong>
-      </button>
+      <%= link_to new_public_order_path do %>
+        <button  button type="button" class="btn btn-success">
+          <strong>情報入力に進む</strong>
+        </button>
+      <% end %>
     </div>
   </div>
 </div>
