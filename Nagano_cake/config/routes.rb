@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     }
 # /devise
 
+  root to: 'public/homes#top'
+
   # adminのrouting
   namespace :admin do
 
@@ -39,7 +41,7 @@ Rails.application.routes.draw do
   namespace :public do
 
     # HomesController関連
-    root "homes#top"
+    root to: "homes#top"
     get  "/about" => "homes#about"
     # /HomesController関連
 
