@@ -1,7 +1,9 @@
 class Admin::ItemsController < ApplicationController
+PER = 10
 
   def index
-     @items = Item.all
+     @items = Item.all.page(params[:page]).per(PER)
+
   end
 
   def new
@@ -18,31 +20,31 @@ class Admin::ItemsController < ApplicationController
       redirect_to admin_item_path(@item.id)
     else
       @items=Item.all
-      render:index
+      render:new
     end
   end
 
   def show
     @item = Item.find(params[:id])
-    @genre = Genre.find(params[:id])
 
   end
 
   def edit
 
     @item = Item.find(params[:id])
-
+    @items = Item.all
+    @genre = Genre.all
   end
 
   def update
      @item = Item.find(params[:id])
 
-    if item.update(item_params)
+    if @item.update(item_params)
       flash[:createdflag] = true
-      redirect_to admin_item_path(item.id)
+      redirect_to admin_item_path(@item.id)
     else
-      @item=item
-      render:edit
+      @item = Item.find(params[:id])
+      render :edit
     end
   end
 

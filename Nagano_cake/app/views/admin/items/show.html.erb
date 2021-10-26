@@ -1,20 +1,24 @@
 <div class='container px-5 px-sm-0'>
 
-  <div class='row'>
-    <h2>商品詳細</h2>
-    <div class='col-md-3'>
-    <tr> <%= attachment_image_tag @item, :image, :size => '69x37' %></tr>
-    </div>
+  <br>
+  <h2 style="background-color: #d3d3d3; display:inline;">商品詳細</h2>
+  </br>
 
+  <br> </br>
 
-    <div class='col-md-8 offset-md-1'>
+    <div class='row'>
+      <div class='col-md-3'>
+        <tr> <%= attachment_image_tag @item, :image, :size => '250x180' %></tr>
+      </div>
 
-    <% if flash[:createdflag] == true then %>
-    <p>You have created item successfully.</p>
-    <% end %>
+      <div class='col-md-8 offset-md-1'>
 
-    <table>
-            <%= form_with model: @item, url: admin_items_path, local:true do |f| %>
+        <% if flash[:createdflag] == true then %>
+        <p>You have created item successfully.</p>
+        <% end %>
+
+        <table>
+          <%= form_with model: @item, url: admin_items_path, local:true do |f| %>
 
             <tr>
               <th>商品名</th>
@@ -41,9 +45,9 @@
             <tr><th>　</th></tr>
 
             <tr>
-              <th>税抜き価格</th>
+              <th>価格</th>
               <th>　　</th>
-              <th>(<%= @item.price%>)円</th>
+              <th><%= (@item.price*1.08).round.to_s(:delimited) %> (<%= @item.price.to_s(:delimited)%>) 円</th>
             </tr>
 
             <tr><th>　</th></tr>
@@ -56,11 +60,12 @@
                 <%= @item.is_active %>
               </th>
             </tr>
+
           <%end%>
-              </table>
+        </table>
+        <br> </br>
+       <td><%= link_to "　編集する　", edit_admin_item_path(@item.id), class: "btn btn-sm btn-success" %></td>
 
-
-
+      </div>
     </div>
-  </div>
 </div>

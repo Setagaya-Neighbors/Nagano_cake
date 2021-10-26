@@ -1,20 +1,20 @@
 <div class='container px-5 px-sm-0'>
-
+<br> </br>
   <div class='row'>
 
     <div class='col-md-3'>
-    <tr> <%= attachment_image_tag @item, :image, :size => '69x37' %></tr>
+    <tr> <%= attachment_image_tag @item, :image, :size => '250x180' %></tr>
     </div>
 
 
     <div class='col-md-8 offset-md-1'>
 
-    <% if flash[:createdflag] == true then %>
-    <p>You have created item successfully.</p>
-    <% end %>
+      <% if flash[:createdflag] == true then %>
+      <p>You have created item successfully.</p>
+      <% end %>
 
-    <table>
-            <%= form_with model: @item, url: admin_items_path, local:true do |f| %>
+        <table>
+          <%= form_with model: @item, url: admin_items_path, local:true do |f| %>
 
             <tr>
               <th><%= @item.name%></th>
@@ -23,19 +23,19 @@
             <tr><th>　</th></tr>
 
             <tr>
-              <th><%= @item.description %></th>
+              <th type="button" class="btn btn-warning"><%= @item.description %></th>
             </tr>
 
             <tr><th>　</th></tr>
 
             <tr>
-              <th><%= @item.genre.name if @item.genre.present? %></th>
+              <td><%= @item.genre.name if @item.genre.present? %></td>
             </tr>
 
             <tr><th>　</th></tr>
 
             <tr>
-              <th>￥<%= @item.price%>(税込)←修正</th>
+              <th>￥<%= (@item.price*1.08).round.to_s(:delimited) %> (税込)</th>
             </tr>
 
             <tr><th>　</th></tr>
@@ -44,12 +44,14 @@
               <th>
                 <%= f.select :amount, [['1',1], ['2',2], ['3',3], ['4',4], ['5',5], ['6',6], ['7',7], ['8',8], ['9',9], ['10',10]] %>
               </th>
+
               <th>
-                  <%= f.submit 'カートに入れる', class: "btn btn-success" %>
+                <%= f.submit 'カートに入れる', class: "btn btn-success" %>
               </th>
             </tr>
+
           <%end%>
-              </table>
+        </table>
 
 
 

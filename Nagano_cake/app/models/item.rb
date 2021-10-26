@@ -15,7 +15,7 @@ class Item < ApplicationRecord
 
 
   # enum
-  enum is_active:  { 販売中: false, 販売停止中: true }
+  enum is_active:  { 販売中: true, 販売停止中: false }
   # enum
 
 end
