@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     }
 # /devise
 
+  root to: 'public/homes#top'
+
   # adminのrouting
   namespace :admin do
 
@@ -39,7 +41,7 @@ Rails.application.routes.draw do
   namespace :public do
 
     # HomesController関連
-    root "homes#top"
+    root to: "homes#top"
     get  "/about" => "homes#about"
     # /HomesController関連
 
@@ -59,11 +61,11 @@ Rails.application.routes.draw do
     # /CustomersController関連
 
     # AddressesController関連
-    resources :address, except: [:new, :show]
+    resources :addresses, except: [:new, :show]
     # /AddressesController関連
 
     # OrdersContoller関連
-    resources :order, except: [:edit, :update, :destroy]
+    resources :orders, except: [:edit, :update, :destroy]
     get "/orders/confirm"  => "orders#confirm",  as: "order_confirm"
     get "/orders/complete" => "orders#complete", as: "order_complete"
     # /OrdersContoller関連
