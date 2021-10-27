@@ -1,6 +1,6 @@
 class Public::AddressesController < ApplicationController
   def index
-    @addresses = Address.where(customer_id: current_customer.id)
+    @addresses = Address.where(customer_id: current_customer)
     @new_address = Address.new
   end
 
