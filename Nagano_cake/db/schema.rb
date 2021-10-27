@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_23_084354) do
+ActiveRecord::Schema.define(version: 2021_10_27_051357) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer "customer_id"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 2021_10_23_084354) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "encrypted_password_confirmation", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
@@ -60,7 +59,6 @@ ActiveRecord::Schema.define(version: 2021_10_23_084354) do
     t.string "postal_code", null: false
     t.string "address", null: false
     t.string "phone_number", null: false
-    t.string "encrypted_password_confirmation", null: false
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
