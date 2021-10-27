@@ -11,9 +11,9 @@ class CreateOrders < ActiveRecord::Migration[5.2]
       t.string  :address,         :null => false
       t.string  :name,            :null => false
       t.integer :postage,         :null => false
-      t.string  :payment,         :null => false, :default => 0 #enumを設定
+      t.integer :payment,         :null => false, :default => 0 #enumを設定
       t.integer :billing_amount,  :null => false
-      t.string  :status,          :null => false, :default => 0 #enumを設定
+      t.integer :status,          :null => false, :default => 0 #enumを設定
 
       t.timestamps
       # column

@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 2021_10_26_043302) do
   create_table "order_details", force: :cascade do |t|
     t.integer "order_id"
     t.integer "item_id"
-    t.string "making_status", default: "0", null: false
+    t.integer "making_status", default: 0, null: false
     t.integer "price_on_order", null: false
     t.integer "item_quantity", null: false
     t.datetime "created_at", null: false
@@ -109,9 +109,9 @@ ActiveRecord::Schema.define(version: 2021_10_26_043302) do
     t.string "address", null: false
     t.string "name", null: false
     t.integer "postage", null: false
-    t.string "payment", default: "0", null: false
+    t.integer "payment", default: 0, null: false
     t.integer "billing_amount", null: false
-    t.string "status", default: "0", null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"

@@ -10,78 +10,72 @@ class Public::OrdersController < ApplicationController
   end
 
   def new
-    params[:cart_item][:cart_item] #CartItems#indexから取得する
     @order = Order.new
     @address = Address.where(customer_id: current_customer.id)
     @new_address = Address.new
-    # @customer = current_customer.id
   end
 
   def confirm
-    @infomaion = params[:item_id, :item_name, :price, :quantity, :total, :payment, :postal_code, :address, :customer_name] #Orders#newから取得する
-    if params[:shipping_address] == 2
+    @cart_item = CartItem.where(customer_id: current_customer.id) #Orders#newからCartItemのidを取得する
+  p @order = Order.new
+  p @order.payment = params[:address][:payment].to_i
+
+    # 配送先の選択によって取得する住所を決定
+    if params[:address][:shipping_address] == "0" #自分の住所だった場合
+        @address             = Customer.find_by(id: current_customer.id)
+        @order.postal_code   = current_customer.postal_code
+        @order.address       = current_customer.address
+        @order.name          = current_customer.name
+    elsif params[:address][:shipping_address] == "1" #登録済住所だった場合
+        @address = Address.find_by(id: params[:address][:registerd_address], customer_id: current_customer.id)
+        @order.postal_code   = @address.postal_code
+        @order.address       = @address.address
+        @order.name          = @address.name
+    elsif  params[:address][:shipping_address] == "2" #新しく登録する住所だった場合
+      @address = Address.new(address_params)
+        @address.postal_code =  params[:address][:postal_code]
+        @address.address     =  params[:address][:address]
+        @address.name        =  params[:address][:name]
+      @address.save
+    end
+    # /配送先の選択によって取得する住所を決定
+
+    # View内での金額計算用
+    @tax_in_amount  = 0
+    @total          = 0
+    @billing_amount = 0
+    # /View内での金額計算用
+
+    if params[:address][:shipping_address] == "2"
       @new_address = Address.new #新しく配送先を登録する場合のみnewアクション実行
     end
-    @order = Order.new
   end
 
   def create
-    @infomaion = params[:item_id, :item_name, :price, :quantity, :total, :payment, :postal_code, :address, :customer_name] #Orders#confirmから取得する
     # orderの保存
     @order = Order.new(order_params)
       @order.customer_id    = current_customer.id
       @order.postage        = 800
-      @order.payment        = @infomaion.payment
-      @order.status         = "入金待ち"
-      @order.billing_amount = @infomaion.total + @order.postage
-
-      # 配送先のラジオボタンの選択により、Orderの配送先住所の保存対象を分岐する
-
-      # 自分の住所の場合
-      if params[:shipping_address] == 0
-       @order.postal_code = current_customer.postal_code
-       @order.address     = current_customer.address
-       @order.name        = current_customer.name
-      # /自分の住所の場合
-      # 配送先として登録済みの住所から選ぶ場合
-      elsif params[:shipping_address] == 1
-        @order.postal_code = @infomaion.postal_code
-        @order.address     = @infomaion.address
-        @order.name        = @infomaion.name
-      # /配送先として登録済みの住所から選ぶ場合
-      # 新しく配送先を登録する場合
-      elsif params[:shipping_address] == 2
-        #新しい配送先の登録
-        @new_address = Address.new(address_params)
-          @new_address.postal_code = @infomaion.postal_code
-          @new_address.address     = @infomaion.address
-          @new_address.name        = @infomaion.name
-        @new_address.save
-        #/新しい配送先の登録
-        # 新しい配送先をorderに反映
-        @order.postal_code = @new_address.postal_code
-        @order.address     = @new_address.address
-        @order.name        = @new_address.name
-        # /新しい配送先をorderに反映
-      # /新しく配送先を登録する場合
-      end
-      # /配送先のラジオボタンの選択により、Orderの配送先住所の保存対象を分岐する
-
-    @order.save
+      @order.status         = 0
+      @order.billing_amount = params[:order][:billing_amount].to_i
     # /orderの保存
 
     # order_detailの保存
-    @order_detail = Orderdetail.new(order_detail_params)
-      @order_detail.order_id       = @order.id
-      @order_detail.item_id        = @infomaion.item_id
-      @order_detail.making_status  = "着手不可"
-      @order_detail.price_on_order = @infomaion.price
-      @order_detail.item_quantity  = @infomation.quantity
-    if  @order_detail.each do |order_deatil|
-          order_detail.save
-        end
+    @cart_item    = CartItem.where(customer_id: current_customer.id)
+    @item_id      = @cart_item.select(:item_id)
+    @item         = Item.where(id: @item_id)
+
+    if  @order.save
+      @cart_item.each do |cart_item|
+        @order_detail                = OrderDetail.new(order_detail_params)
+        @order_detail.order_id       = @order.id
+        @order_detail.item_id        = cart_item.item_id
+        @order_detail.making_status  = 0
+        @order_detail.price_on_order = (cart_item.item.price * 1.08).round
+        @order_detail.item_quantity   = cart_item.quantity
+        @order_detail.save
+      end
       # cart_itemの削除
-      @cart_item = CartItem.find_by(customer_id :current_customer.id)
       @cart_item.destroy_all
       # /cart_itemの削除
       redirect_to public_order_complete_path
@@ -108,7 +102,7 @@ class Public::OrdersController < ApplicationController
   end
 
   def order_detail_params
-    params.require(:order_detail).permit(:order_id, :item_id, :making_status, :price_on_order, :item_quantity)
+    params.permit(:order_id, :item_id, :making_status, :price_on_order, :item_quantity)
   end
 
 end

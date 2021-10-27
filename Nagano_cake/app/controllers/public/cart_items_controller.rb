@@ -8,7 +8,7 @@ class Public::CartItemsController < ApplicationController
       flash[:createdflag] = true
       redirect_to public_cart_items_path
     else                                                                                                                #falseの場合、レコードを新規作成
-      p @cart_item  = CartItem.new(cart_item_params)
+      @cart_item  = CartItem.new(cart_item_params)
       @cart_item.customer_id = current_customer.id
       if @cart_item.save
         flash[:createdflag]    = false                                                                                  #redirect先でtrueパターンとは別のメッセージを表示させるため、便宜的にfalseと設定
@@ -22,6 +22,7 @@ class Public::CartItemsController < ApplicationController
 
   def index
     @cart_items = CartItem.where(customer_id: current_customer.id)
+    @cart_item_id = CartItem.find_by(customer_id: current_customer.id)
     @amount = 0 #合計金額の計算に使用
 
   end

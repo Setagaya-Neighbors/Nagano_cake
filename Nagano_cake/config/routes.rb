@@ -63,9 +63,9 @@ Rails.application.routes.draw do
     # /AddressesController関連
 
     # OrdersContoller関連
-    resources :orders, except: [:edit, :update, :destroy]
     get "/orders/confirm"  => "orders#confirm",  as: "order_confirm"
     get "/orders/complete" => "orders#complete", as: "order_complete"
+    resources :orders, except: [:edit, :update, :destroy]
     # /OrdersContoller関連
 
 

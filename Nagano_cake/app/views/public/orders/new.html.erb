@@ -13,35 +13,33 @@
 
 <br>
 
+<%= form_with model:[@model, Address.new], url: public_order_confirm_path, method: :get, local:true do |f| %> <!--containerを跨るためここに配置-->
+
 <!--支払方法選択-->
 <div class="container">
   <div class="row">
     <p><strong>支払方法</strong></p>
 
     <div class="col-md-12">
-      <%= form_with model:@order, url: public_orders_path, method: :post, local:true do |f| %>
-        <div>
-          <%= f.radio_button :payment, :"0", checked: true %>
-          <%= f.label :payment, "クレジットカード", {value: :"0"} %>
-        </div>
-        <div>
-          <%= f.radio_button :payment, :"1" %>
-          <%= f.label :payment, "銀行振込", {value: :"1"} %>
-        </div>
-      <% end %>
+      <div>
+        <%= f.radio_button :payment, :"0", checked: true %>
+        <%= f.label :payment, "クレジットカード", {value: :"0"} %>
+      </div>
+      <div>
+        <%= f.radio_button :payment, :"1" %>
+        <%= f.label :payment, "銀行振込", {value: :"1"} %>
+      </div>
     </div>
 
   </div>
 </div>
-
 <!--/支払方法選択-->
 
-<%= form_with model:[@model, Address.new], url: public_orders_path, method: :post, local:true do |f| %> <!--containerを跨るためここに配置-->
 
 <!--お届け先選択-->
 <div class="container">
   <div class="row">
-    <p><strong>支払方法</strong></p>
+    <p><strong>お届け先</strong></p>
 
     <div class="col-md-12">
 
@@ -66,7 +64,7 @@
           <%= f.radio_button :shipping_address, :"1" %>
           <%= f.label :shipping_address, "登録済住所から選択", {value: :"1"} %>
           <ul class="list-unstyled ml-4">
-            <li><%= f.collection_select :registerd_address, Address.where(customer_id: current_customer.id), :id, :name %></li>
+            <li><%= f.collection_select :registerd_address, Address.where(customer_id: current_customer.id), :id, :full_address %></li>
           </ul>
         </div>
         <!--/登録済住所-->
