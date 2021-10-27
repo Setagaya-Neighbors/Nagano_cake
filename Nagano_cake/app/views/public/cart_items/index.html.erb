@@ -139,9 +139,9 @@
 
       <%= form_with model:@cart_items, url: new_public_order_path, local:true do |f| %>
         <%= f.hidden_field :cart_item, :value => @cart_items %>
-        <strong><%= f.submit '情報入力に進む', class: "btn btn-success btn-sm" %></strong>
+        <%= f.submit '情報入力に進む', class: "btn btn-success btn-sm" %>
       <% end %>
-      
+
     </div>
   </div>
 </div>

@@ -12,8 +12,9 @@ class Public::OrdersController < ApplicationController
   def new
     params[:cart_item][:cart_item] #CartItems#indexから取得する
     @order = Order.new
-    @address = Address.find_by(customer_id: current_customer.id)
+    @address = Address.where(customer_id: current_customer.id)
     @new_address = Address.new
+    # @customer = current_customer.id
   end
 
   def confirm
