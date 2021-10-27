@@ -48,8 +48,8 @@ Rails.application.routes.draw do
     # /ItemsController関連
 
     # CartItemsController関連
-    resources :cart_items, except: [:new, :edit, :show]
     delete "/cart_items/destroy_all" => "cart_items#destroy_all", as:"destroy_all_cart_items"
+    resources :cart_items, except: [:new, :edit, :show]
     # /CartItemsController関連
 
     # CustomersController関連
@@ -59,11 +59,11 @@ Rails.application.routes.draw do
     # /CustomersController関連
 
     # AddressesController関連
-    resources :address, except: [:new, :show]
+    resources :addresses, except: [:new, :show]
     # /AddressesController関連
 
     # OrdersContoller関連
-    resources :order, except: [:edit, :update, :destroy]
+    resources :orders, except: [:edit, :update, :destroy]
     get "/orders/confirm"  => "orders#confirm",  as: "order_confirm"
     get "/orders/complete" => "orders#complete", as: "order_complete"
     # /OrdersContoller関連

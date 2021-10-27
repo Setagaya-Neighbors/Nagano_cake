@@ -19,17 +19,15 @@
       <!--/customerが見ている欄-->
 
 <br>
-    <%= form_with model:@item, url: public_cart_items_path, method: :post, local:true do |f| %>
+    <%= form_with model:@cart_item, url: public_cart_items_path, method: :post, local:true do |f| %>
     <!--customerが選択するエリア-->
       <%= f.select :quantity, [['1',1], ['2',2], ['3',3], ['4',4], ['5',5], ['6',6], ['7',7], ['8',8], ['9',9], ['10',10]], prompt: "個数選択" %>
       <%= f.submit 'カートに入れる', class: "btn btn-success" %>
     <!--/customerが選択するエリア-->
 
     <!--customerに隠してCartItemsControllerに送るパラメータ-->
+      <%= f.hidden_field :customer_id,:value => @customer.id %>
       <%= f.hidden_field :item_id,    :value => @item.id %>
-      <%= f.hidden_field :item_name,  :value => @item.name  %>
-      <%= f.hidden_field :item_image, :value => @item.image_id %>
-      <%= f.hidden_field :price,      :value => @item.price %>
     <!--/customerに隠してCartItemsControllerに送るパラメータ-->
 
     <%end%>

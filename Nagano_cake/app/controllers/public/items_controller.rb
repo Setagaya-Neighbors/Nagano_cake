@@ -8,11 +8,8 @@ class Public::ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @customer = Customer.find_by(id: current_customer.id)
+    @cart_item = CartItem.new
   end
 
-  private
-  # ストロングパラメータ
-  def item_params
-    params.require(:item).permit(:name, :description)
-  end
 end

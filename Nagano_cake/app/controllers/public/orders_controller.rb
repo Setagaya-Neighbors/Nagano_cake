@@ -10,8 +10,8 @@ class Public::OrdersController < ApplicationController
   end
 
   def new
+    params[:cart_item][:cart_item] #CartItems#indexから取得する
     @order = Order.new
-    params[:item_id, :item_name, :price, :quantity, :total] #CartItems#createから取得する
     @address = Address.find_by(customer_id: current_customer.id)
     @new_address = Address.new
   end
