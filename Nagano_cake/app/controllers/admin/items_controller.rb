@@ -1,22 +1,26 @@
 class Admin::ItemsController < ApplicationController
+PER = 10
 
   def index
-     @items = Item.all
+     @items = Item.all.page(params[:page]).per(PER)
+
   end
 
   def new
      @item = Item.new
+     @genre = Genre.all
   end
 
   def create
 
      @item = Item.new(item_params)
+
     if @item.save
       flash[:createdflag] = true
       redirect_to admin_item_path(@item.id)
     else
       @items=Item.all
-      render:index
+      render:new
     end
   end
 
@@ -28,18 +32,19 @@ class Admin::ItemsController < ApplicationController
   def edit
 
     @item = Item.find(params[:id])
-
+    @items = Item.all
+    @genre = Genre.all
   end
 
   def update
      @item = Item.find(params[:id])
 
-    if item.update(item_params)
+    if @item.update(item_params)
       flash[:createdflag] = true
-      redirect_to admin_item_path(item.id)
+      redirect_to admin_item_path(@item.id)
     else
-      @item=item
-      render:edit
+      @item = Item.find(params[:id])
+      render :edit
     end
   end
 
@@ -48,8 +53,9 @@ class Admin::ItemsController < ApplicationController
 private
   # ストロングパラメータ
   def item_params
-   params.require(:item).permit(:name, :description ,:image_id, :price, :is_active)
-   params.require(:genre).permit(:name)
+   params.require(:item).permit(:name, :description ,:image, :price, :is_active, :genre_id)
+
   end
+
 
 end
