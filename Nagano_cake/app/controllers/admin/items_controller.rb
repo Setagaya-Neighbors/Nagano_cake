@@ -1,7 +1,10 @@
 class Admin::ItemsController < ApplicationController
+before_action :authenticate_admin!
+PER = 10
 
   def index
-     @items = Item.all
+     @items = Item.all.page(params[:page]).per(PER)
+
   end
 
   def new
@@ -14,11 +17,13 @@ class Admin::ItemsController < ApplicationController
      @item = Item.new(item_params)
 
     if @item.save
-      flash[:createdflag] = true
+      flash[:created] = true
       redirect_to admin_item_path(@item.id)
     else
-      @items=Item.all
-      render:index
+
+      @genre = Genre.all
+
+      render:new
     end
   end
 
@@ -29,18 +34,22 @@ class Admin::ItemsController < ApplicationController
   def edit
 
     @item = Item.find(params[:id])
-
+    @items = Item.all
+    @genre = Genre.all
   end
 
   def update
      @item = Item.find(params[:id])
 
-    if item.update(item_params)
+    if @item.update(item_params)
       flash[:createdflag] = true
-      redirect_to admin_item_path(item.id)
+      redirect_to admin_item_path(@item.id)
     else
-      @item=item
-      render:edit
+
+
+      @genre = Genre.all
+
+      render :edit
     end
   end
 

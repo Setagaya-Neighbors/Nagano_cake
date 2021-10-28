@@ -1,9 +1,8 @@
 class Public::ItemsController < ApplicationController
+ PER = 8
 
   def index
-     @items = Item.all
-     @cart_items = CartItem.all
-
+   @items = Item.where(is_active: true).page(params[:page]).per(PER)
   end
 
   def show

@@ -1,66 +1,70 @@
-<div class='container px-5 px-sm-0'>
-
+<div class='container'>
   <div class='row'>
-    <h2>商品詳細</h2>
+
+    <div class='container px-3 px-sm-3 mb-4'>
+      <h4 style="background-color: #d3d3d3; display:inline;">　商品詳細　</h4>
+    </div>
+
     <div class='col-md-3'>
-    <tr> <%= attachment_image_tag @item, :image, :size => '69x37' %></tr>
+      <tr> <%= attachment_image_tag @item, :image, :size => '250x180' %></tr>
     </div>
 
+    <div class="col-md-6">
 
-    <div class='col-md-8 offset-md-1'>
+      <table width="950" height="250">
 
-    <% if flash[:createdflag] == true then %>
-    <p>You have created item successfully.</p>
-    <% end %>
+        <% if flash[:created] == true then %>
+        <p>[新規商品が<font color="#2DFF57">作成</font>されました。]</p>
+        <% end %>
 
-    <table>
-            <%= form_with model: @item, url: admin_items_path, local:true do |f| %>
+        <% if flash[:createdflag] == true then %>
+        <p>[商品の内容が<font color="#2DFF57">更新</font>されました。]</p>
+        <% end %>
 
-            <tr>
-              <th>商品名</th>
-              <th>　　</th>
-              <th><%= @item.name%></th>
-            </tr>
 
-            <tr><th>　</th></tr>
+        <%= form_with model: @item, url: admin_items_path, local:true do |f| %>
 
-            <tr>
-              <th>商品説明</th>
-              <th>　　</th>
-              <th><%= @item.description %></th>
-            </tr>
+        <tr>
+          <td>商品名</td>
+          <td><%= @item.name%></td>
+        </tr>
 
-            <tr><th>　</th></tr>
+        <tr>
+          <td>商品説明</td>
+          <td><%= @item.description %></td>
+        </tr>
 
-            <tr>
-              <th>ジャンル</th>
-              <th>　　</th>
-              <th><%= @item.genre.name if @item.genre.present? %></th>
-            </tr>
+        <tr>
+          <td>ジャンル</td>
+          <td><%= @item.genre.name if @item.genre.present? %></td>
+        </tr>
 
-            <tr><th>　</th></tr>
+        <tr>
+          <td noWrap>税込価格
+          <br><small>(税抜価格)</small></td>
+          <td noWrap><%= (@item.price*1.08).round.to_s(:delimited) %> (<%= @item.price.to_s(:delimited)%>) 円
+          </td>
+        </tr>
 
-            <tr>
-              <th>税抜き価格</th>
-              <th>　　</th>
-              <th>(<%= @item.price%>)円</th>
-            </tr>
-
-            <tr><th>　</th></tr>
-
-            <tr>
-              <th>販売ステータス</th>
-              <th>　　</th>
-              <th>
-                <%= f.hidden_field :is_active %>
-                <%= @item.is_active %>
-              </th>
-            </tr>
+        <tr>
+          <td>販売ステータス</td>
+          <td>
+          <%= f.hidden_field :is_active %>
+          <% if @item.is_active == "販売中" %>
+          <div class="text-success"><%= @item.is_active %></div>
+          <%else%>
+          <div class="text-secondary"><%= @item.is_active %></div>
           <%end%>
-              </table>
+          </td>
+        </tr>
 
+        <%end%>
+      </table>
 
+      <td><%= link_to "　編集する　", edit_admin_item_path(@item.id), data: {"turbolinks" => false}, class: "btn btn-sm btn-success" %></td>
 
     </div>
+
   </div>
+
 </div>
