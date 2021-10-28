@@ -16,10 +16,11 @@ PER = 10
      @item = Item.new(item_params)
 
     if @item.save
-      flash[:createdflag] = true
+      flash[:created] = true
       redirect_to admin_item_path(@item.id)
     else
-      @items=Item.all
+
+      @genre = Genre.all
       render:new
     end
   end
@@ -43,7 +44,8 @@ PER = 10
       flash[:createdflag] = true
       redirect_to admin_item_path(@item.id)
     else
-      @item = Item.find(params[:id])
+
+      @genre = Genre.all
       render :edit
     end
   end
