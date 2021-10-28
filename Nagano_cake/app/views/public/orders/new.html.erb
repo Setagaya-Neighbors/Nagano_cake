@@ -1,0 +1,119 @@
+<!--タイトル-->
+<div class="container">
+  <div class="row">
+
+
+    <div class="col-md-2 offset-md-1 bg-light d-flex align-items-center justify-content-center">
+      <h6><注文情報入力</h6>
+    </div>
+
+  </div>
+</div>
+<!--/タイトル-->
+
+<br>
+
+<%= form_with model:[@model, Address.new], url: public_order_confirm_path, method: :get, local:true do |f| %> <!--containerを跨るためここに配置-->
+
+<!--支払方法選択-->
+<div class="container">
+  <div class="row">
+    <p><strong>支払方法</strong></p>
+
+    <div class="col-md-12">
+      <div>
+        <%= f.radio_button :payment, :"0", checked: true %>
+        <%= f.label :payment, "クレジットカード", {value: :"0"} %>
+      </div>
+      <div>
+        <%= f.radio_button :payment, :"1" %>
+        <%= f.label :payment, "銀行振込", {value: :"1"} %>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--/支払方法選択-->
+
+
+<!--お届け先選択-->
+<div class="container">
+  <div class="row">
+    <p><strong>お届け先</strong></p>
+
+    <div class="col-md-12">
+
+        <!--自分自身の住所-->
+        <div>
+          <%= f.radio_button :shipping_address, :"0", checked: true %>
+          <%= f.label :shipping_address, "ご自身の住所", {value: :"0"} %>
+            <ul class="list-unstyled ml-4">
+              <li style="line-height:0.5rem">
+                〒<%= current_customer.postal_code %>
+                <%= current_customer.postal_code %>
+              </li>
+              <li style="line-height:2rem">
+                <%= current_customer.last_name %><%= current_customer.first_name %>
+              </li>
+            </ul>
+        </div>
+        <!--/自分自身の住所-->
+
+        <!--登録済住所-->
+        <div>
+          <%= f.radio_button :shipping_address, :"1" %>
+          <%= f.label :shipping_address, "登録済住所から選択", {value: :"1"} %>
+          <ul class="list-unstyled ml-4">
+            <li><%= f.collection_select :registerd_address, Address.where(customer_id: current_customer.id), :id, :full_address %></li>
+          </ul>
+        </div>
+        <!--/登録済住所-->
+
+        <div>
+          <!--新しい配送先を登録する-->
+          <%= f.radio_button :shipping_address, :"2" %>
+          <%= f.label :shipping_address, "新しい登録先", {value: :"1"} %>
+            <!--配送先入力フォーム-->
+            <ul class="list-unstyled ml-4">
+              <li>
+                <table class="table table-borderless table-sm">
+
+                  <tr>
+                    <th style="width: 20%">郵便番号（ハイフンなし）</th>
+                    <td><%= f.text_field :postal_code %></td>
+                  </tr>
+                  <tr>
+                    <th style="width: 20%">住所</th>
+                    <td><%= f.text_field :address, size: 60 %></td>
+                  </tr>
+                  <tr>
+                    <th style="width: 20%">宛名</th>
+                    <td><%= f.text_field :name %></td>
+                  </tr>
+
+                </table>
+              </li>
+            </ul>
+            <!--配送先入力フォーム-->
+          <!--/新しい配送先を登録するフォーム-->
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--/お届け先選択-->
+
+<br>
+
+<!--確認画面へ進むボタン-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 offset-md-5 d-flex align-items-center justify-content-center">
+      <%= f.submit "確認画面へ進む" , class: "btn btn-primary"%>
+    </div>
+  </div>
+</div>
+<!--/確認画面へ進むボタン-->
+
+<% end %> <!--form_withの終わり-->

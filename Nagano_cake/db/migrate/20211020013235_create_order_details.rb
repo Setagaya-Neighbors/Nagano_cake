@@ -8,7 +8,7 @@ class CreateOrderDetails < ActiveRecord::Migration[5.2]
       # FK
 
       # column
-      t.string  :making_status,  :null => false, :default => 0 #enum
+      t.integer :making_status,  :null => false, :default => 0 #enum
       t.integer :price_on_order, :null => false
       t.integer :item_quantity,  :null => false
 

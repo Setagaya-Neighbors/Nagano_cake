@@ -29,7 +29,6 @@ PER = 10
 
   def show
     @item = Item.find(params[:id])
-
   end
 
   def edit

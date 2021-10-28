@@ -1,0 +1,148 @@
+<div class="container">
+  <div class="row">
+
+    <!--タイトル-->
+    <div class="col-md-2 bg-light d-flex align-items-center justify-content-center">
+      <h6>ショッピングカート</h6>
+    </div>
+    <!--/タイトル-->
+
+    <!--カート全削除ボタン-->
+    <div class="col-md-2 offset-md-8">
+      <%= link_to public_destroy_all_cart_items_path, method: :delete do %>
+        <button button type="button" class="btn btn-danger btn-sm">
+          カートを空にする
+        </button>
+      <% end %>
+    </div>
+    <!--/カート全削除ボタン-->
+
+  </div>
+</div>
+
+<br>
+<br>
+
+<!--カートを表示する表-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+
+        <table border="2" class="table border border-dark">
+
+            <!--表の項目名-->
+            <tr>
+                <th scope="col" class="bg-light" style="width: 40%">商品名</th>
+                <th scope="col" class="bg-light" style="width: 15%">単価（税込）</th>
+                <th scope="col" class="bg-light" style="width: 15%">数量</th>
+                <th scope="col" class="bg-light" style="width: 15%">小計</th>
+                <th scope="col" class="bg-light" style="width: 15%"></th>
+            </tr>
+            <!--表の項目名-->
+
+            <!--表の内容-->
+            <% @cart_items.each do |cart_item| %>
+            <tr>
+                <!--商品名、商品画像-->
+                <td>
+                  <span><%= attachment_image_tag cart_item.item, :image, :size => '50x50' %></span>
+                  <span><%= cart_item.item.name %></span>
+                </td>
+                <!--/商品名、商品画像-->
+
+                <!--価格-->
+                <td class="align-middle">
+                  <%= (cart_item.item.price * 1.08).round.to_s(:delimited) %>
+                </td>
+                <!--/価格-->
+
+                <!--注文個数と個数変更ボタン-->
+                <td class="align-middle">
+                  <span>
+                    <%= form_with model:cart_item, url: public_cart_item_path(cart_item.id), method: :patch, local:true do |f| %>
+                      <%= f.number_field :quantity, in: 1..100 %>
+                      <%= f.hidden_field :item_id, :value => cart_item.item_id %>
+                      <%= f.submit '変更', class: "btn btn-success btn-sm" %>
+                    <% end %>
+                  </span>
+                </td>
+                <!--/注文個数と個数変更ボタン-->
+
+                <!--小計-->
+                <td class="align-middle">
+                  <%= "#{(cart_item.item.price * cart_item.quantity * 1.08).round.to_s(:delimited)}" %>
+                </td>
+                <!--/小計-->
+
+                <!--個々のアイテムの注文キャンセルボタン-->
+                <td class="text-center align-middle">
+                  <%= form_with model:cart_item, url: public_cart_item_path(cart_item.id), method: :delete, local:true do |f| %>
+                      <%= f.hidden_field :item_id, :value => cart_item.item_id %>
+                      <%= f.submit '削除する', class: "btn btn-danger btn-sm" %>
+                    <% end %>
+                </td>
+                <!--/個々のアイテムの注文キャンセルボタン-->
+            </tr>
+
+                <!--合計金額を計算し、@amountに代入（後掲の合計金額欄に表示）-->
+                <% @amount = (@amount + (cart_item.item.price * cart_item.quantity * 1.08)).round %>
+                <!--/合計金額を計算し、@amountに代入（後掲の合計金額欄に表示）-->
+
+            <% end %>
+            <!--/表の内容-->
+
+        </table>
+
+    </div>
+  </div>
+</div>
+<!--/カートを表示する表-->
+
+<br>
+
+<div class="container">
+  <div class="row">
+
+    <!--アイテム一覧に戻るボタン-->
+    <div class="col-md-2 offset-md-1">
+      <%= link_to  public_items_path do %>
+        <button button type="button" class="btn btn-primary btn-sm">
+          買い物を続ける
+        </button>
+      <% end %>
+    </div>
+    <!--/アイテム一覧に戻るボタン-->
+
+    <!--合計金額表示-->
+    <div class="col-md-3 offset-md-6">
+      <table border="2" class="table border border-dark">
+          <tr>
+            <th scope="row" class="bg-light" style="width: 50%">合計金額</th>
+            <td><%= @amount.to_s(:delimited) %></td>
+          </tr>
+      </table>
+    </div>
+    <!--/合計金額表示-->
+
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<!--注文情報入力に進むボタン-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 mx-auto">
+
+      <%= form_with model:@cart_items, url: new_public_order_path, method: :get, local:true do |f| %>
+        <%= f.hidden_field :cart_item, :value => @cart_item_id %>
+        <%= f.submit '情報入力に進む', class: "btn btn-success btn-sm" %>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+<!--/注文情報入力に進むボタン-->
