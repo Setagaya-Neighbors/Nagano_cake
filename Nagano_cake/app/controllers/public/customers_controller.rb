@@ -7,8 +7,7 @@ class Public::CustomersController < ApplicationController
   end
 
   def withdraw
-    @customer = Customer.find_by(id: current_customer.id)
-    @user.update(is_deleted: false)
+    current_customer.update(is_deleted: "退会")
     reset_session
     redirect_to public_root_path
   end
