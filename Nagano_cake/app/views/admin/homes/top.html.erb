@@ -1,0 +1,47 @@
+<!--タイトル-->
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-2 offset-md-1 bg-light d-flex align-items-center justify-content-center">
+      <h6>注文履歴一覧</h6>
+    </div>
+
+  </div>
+</div>
+<!--/タイトル-->
+
+<br>
+
+<!--注文履歴一覧の表-->
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-12">
+      <table class="table">
+
+        <tr>
+            <th scope="row", style="width: 25%" class="bg-light">注文日時</th>
+            <th scope="row", style="width: 25%" class="bg-light">購入者</th>
+            <th scope="row", style="width: 25%" class="bg-light">注文個数</th>
+            <th scope="row", style="width: 25%" class="bg-light">注文ステータス</th>
+        </tr>
+
+        <% @orders.each do |order| %>
+        <tr>
+          <td class="align-middle">
+            <%= link_to admin_order_path(order.id) do %>
+              <%= order.created_at.to_s(:datetime_detail_jp) %>
+            <% end %>
+          </td>
+          <td class="align-middle"><%= order.name %></td>
+          <td class="align-middle"><%= order.order_details.sum(:item_quantity) %></p>
+          <td class="align-middle"><%= order.status_i18n %></td>
+        </tr>
+        <% end %>
+
+
+      </table>
+    </div>
+  </div>
+</div>
+<!--/注文履歴一覧の表-->

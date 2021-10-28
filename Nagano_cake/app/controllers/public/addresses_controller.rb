@@ -2,6 +2,7 @@ class Public::AddressesController < ApplicationController
   before_action :authenticate_customer!
   def index
     @addresses = Address.where(customer_id: current_customer)
+
     @new_address = Address.new
   end
 
@@ -13,6 +14,7 @@ class Public::AddressesController < ApplicationController
     else
       @addresses = Address.where(customer_id: current_customer.id)
       render :index
+
     end
   end
 
@@ -45,3 +47,4 @@ class Public::AddressesController < ApplicationController
   end
 
 end
+

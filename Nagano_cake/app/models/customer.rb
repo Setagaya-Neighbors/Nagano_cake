@@ -17,4 +17,10 @@ class Customer < ApplicationRecord
   # enum
   enum is_deleted:  { 退会: true, 有効: false }
   # enum
+
+  # 姓、名を連結して表示（order#comfirmで使用）
+  def name
+    self.last_name + " " + self.first_name
+  end
+  # 姓、名を連結して表示（order#comfirmで使用）
 end
