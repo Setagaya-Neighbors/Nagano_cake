@@ -46,7 +46,8 @@ class Public::CartItemsController < ApplicationController
       flash[:createdflag] = true
     else flash[:createdflag] = false
     end
-
+    @cart_items = CartItem.where(customer_id: current_customer.id)
+    @cart_item_id = CartItem.find_by(customer_id: current_customer.id)
     redirect_to public_cart_items_path
   end
 
