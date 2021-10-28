@@ -1,3 +1,4 @@
+<!--タイトル-->
 <div class="container">
   <div class="row">
 
@@ -5,10 +6,13 @@
       <h6>注文履歴一覧</h6>
     </div>
 
+  </div>
 </div>
+<!--/タイトル-->
 
 <br>
 
+<!--注文履歴一覧の表-->
 <div class="container">
   <div class="row">
 
@@ -24,22 +28,31 @@
                 <th scope="row", style="width: 10%" class="bg-light">注文詳細</th>
             </tr>
 
-            <tr>
-              <td class="align-middle">2019/11/5</td>
-              <td>
-                <p style="height: 0.3rem">郵便番号</p>
-                <p style="height: 0.3rem">住所</p>
-                <p style="height: 0.3rem">宛名</p>
-              </td>
-              <td class="align-middle">イチゴのショートケーキ</td>
-              <td class="align-middle">1,200円</td>
-              <td class="align-middle">入金待ち</td>
-              <td class="align-middle">
-                <button button type="button" class="btn btn-primary btn-sm">
-                  <strong>表示する</strong>
-                </button>
-              </td>
-            </tr>
+            <% @orders.each do |order| %>
+              <tr>
+                <td class="align-middle"><%= order.created_at.to_s(:datetime_jp) %></td>
+                <td>
+                  <p style="height: 0.3rem"><%= order.postal_code %></p>
+                  <p style="height: 0.3rem"><%= order.address %></p>
+                  <p style="height: 0.3rem"><%= order.name %></p>
+                </td>
+                <td class="align-middle">
+                  <% @item.each do |item| %>
+                    <p style="height: 0.3rem"><%= item.name %></p>
+                  <% end %>
+                </td>
+                <td class="align-middle"><%= order.billing_amount.to_s(:delimited) %></td>
+                <td class="align-middle"><%= order.status %></td>
+                <td class="align-middle">
+                  <%= link_to public_order_path(order.id) do %>
+                  <button button type="button" class="btn btn-primary btn-sm">
+                    <strong>表示する</strong>
+                  </button>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
     </div>
 
 </div>
+<!--/注文履歴一覧の表-->

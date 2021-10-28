@@ -52,7 +52,7 @@
           <!--合計を計算-->
           <% @tax_in_amount  += ((cart_item.item.price) * (cart_item.quantity) * 1.08).round %>
           <% @total += ((cart_item.item.price) * (cart_item.quantity) * 1.08).round %>
-          <% @billing_amount = (@total + 800).to_s(:delimited)  %>
+          <% @billing_amount = (@total + 800) %>
           <!--/合計を計算-->
         </tr>
         <!--/注文商品の表の内容-->
@@ -82,7 +82,7 @@
         <tr>
           <th scope="row" style="width: 50%" class="bg-light">請求金額</th>
           <td>
-            <%= @billing_amount %>
+            <%= @billing_amount.to_s(:delimited) %>
           </td>
         </tr>
 

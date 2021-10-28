@@ -1,24 +1,26 @@
 class Public::OrdersController < ApplicationController
 
   def index
-    @orders = Order.find_by(customer_id: current_customer.id)
+    @orders       = Order.where(customer_id: current_customer.id)
+    @order_detail = OrderDetail.where(order_id: @orders)
+    @item         = Item.where(id: @order_detail)
   end
 
   def show
-    @order = Order.find(params[:id])
-    @order_detail = @Orderdetail.find_by(order_id: @order.id)
+    @order        = Order.find(params[:id])
+    @order_detail = OrderDetail.where(order_id: params[:id])
   end
 
   def new
-    @order = Order.new
-    @address = Address.where(customer_id: current_customer.id)
+    @order       = Order.new
+    @address     = Address.where(customer_id: current_customer.id)
     @new_address = Address.new
   end
 
   def confirm
-    @cart_item = CartItem.where(customer_id: current_customer.id) #Orders#newからCartItemのidを取得する
-  p @order = Order.new
-  p @order.payment = params[:address][:payment].to_i
+    @cart_item     = CartItem.where(customer_id: current_customer.id) #Orders#newからCartItemのidを取得する
+    @order         = Order.new
+    @order.payment = params[:address][:payment].to_i
 
     # 配送先の選択によって取得する住所を決定
     if params[:address][:shipping_address] == "0" #自分の住所だった場合
@@ -57,7 +59,7 @@ class Public::OrdersController < ApplicationController
       @order.customer_id    = current_customer.id
       @order.postage        = 800
       @order.status         = 0
-      @order.billing_amount = params[:order][:billing_amount].to_i
+      @order.billing_amount = params[:order][:billing_amount].to_f.floor
     # /orderの保存
 
     # order_detailの保存
@@ -72,7 +74,7 @@ class Public::OrdersController < ApplicationController
         @order_detail.item_id        = cart_item.item_id
         @order_detail.making_status  = 0
         @order_detail.price_on_order = (cart_item.item.price * 1.08).round
-        @order_detail.item_quantity   = cart_item.quantity
+        @order_detail.item_quantity  = cart_item.quantity
         @order_detail.save
       end
       # cart_itemの削除
