@@ -1,3 +1,57 @@
 // Place all the styles related to the public/homes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.main {
+  background-image: image-url("top.jpg");
+  background-repeat: no-repeat;
+  background-position:center center;
+   background-size:contain;                 /* 画像のサイズを指定    */
+    width:100%;                              /* 横幅のサイズを指定    */
+    height:400px;
+}
+
+.main-visual-content {
+
+  background-color: rgba( 204, 255, 204, 0.55 );
+  background-position:center center;
+  width: 25%; border: solid 3px #ffffff;
+  background-color: #ffffff
+
+}
+
+.main-visual-1{
+      font-size: 20px;
+      font-weight: bold;
+      -webkit-text-stroke-width: 1.5px;
+      -webkit-text-stroke-color: darkorange;
+      -webkit-text-fill-color: white;
+      text-shadow: 3px 2px 0 gray;
+}
+
+.main-visual-2 {
+      font-size: 20px;
+      font-weight: bold;
+      -webkit-text-stroke-width: 1.5px;
+      -webkit-text-stroke-color: darkorange;
+      -webkit-text-fill-color: white;
+      text-shadow: 3px 2px 0 gray;
+}
+
+.main-visual-3 {
+      font-size: 20px;
+      font-weight: bold;
+      -webkit-text-stroke-width: 1.5px;
+      -webkit-text-stroke-color: darkorange;
+      -webkit-text-fill-color: white;
+      text-shadow: 3px 2px 0 gray;
+}
+
+.main-visual-4 {
+      font-size: 20px;
+      font-weight: bold;
+      -webkit-text-stroke-width: 1.5px;
+      -webkit-text-stroke-color: darkorange;
+      -webkit-text-fill-color: white;
+      text-shadow: 3px 2px 0 gray;
+}

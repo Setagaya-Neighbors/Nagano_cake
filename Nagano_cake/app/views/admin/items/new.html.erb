@@ -1,11 +1,17 @@
 <div class='container'>
   <div class='row'>
-  <% if @item.errors.any? %>
-  <%= @item.errors.count %>error prohibited this obj from being saved:
-  <% @item.errors.full_messages.each do |message| %>
-  <%= message %>
-  <% end %>
-  <% end %>
+
+
+    <font color="red">
+      <% if @item.errors.any? %>
+      <%= @item.errors.count %>error prohibited this obj from being saved:
+      <% @item.errors.full_messages.each do |message| %>
+      <%= message %>
+      <% end %>
+      <% end %>
+    </font>
+
+
     <div class='container'>
       <div class='row'>
 
@@ -14,54 +20,56 @@
         </div>
 
         <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
-          <table>
+
+          <table width="500" height="500">
           <%= form_with model: @item, url: admin_items_path, local:true do |f| %>
 
-          <tr><th>　</th></tr>
+
 
           <tr>
             <th>商品画像</th>
-            <th>　　</th>
+
             <th><%= f.attachment_field :image %></th>
           </tr>
 
-          <tr><th>　</th></tr>
+
 
           <tr>
             <th>商品名</th>
-            <th>　　</th>
+
             <th><%= f.text_field :name, placeholder: "商品名" %></th>
           </tr>
 
-          <tr><th>　</th></tr>
+
 
           <tr>
             <th>商品説明</th>
-            <th>　　</th>
+
             <th><%= f.text_area :description %></th>
           </tr>
 
-          <tr><th>　</th></tr>
+
 
           <tr>
             <th>ジャンル</th>
-            <th>　　</th>
+
             <th><%= f.collection_select :genre_id, @genre, :id, :name, {include_blank: "--選択してください--"}%></th>
           </tr>
 
-          <tr><th>　</th></tr>
+
 
           <tr>
             <th>税抜き価格</th>
-            <th>　　</th>
+
             <th><%= f.text_field :price, placeholder: "1000" %>円</th>
           </tr>
 
-          <tr><th>　</th></tr>
+
 
           <tr>
             <th>販売ステータス</th>
-            <th>　　</th>
+
+
             <th>
               <%= f.radio_button :is_active, :販売中, checked: "checked" %>
               <%= f.label :販売中, class: "is_active_label" %>
@@ -70,14 +78,18 @@
             </th>
           </tr>
 
-          </table>
 
-          <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
-            <br></br>
-            <!--改行用-->
+
+
+
+          <tr>
+            <td>
             <%= f.submit '新規登録', class: "btn btn-success" %>
             <% end %>
-          </div>
+            </td>
+          </tr>
+
+          </table>
 
         </div>
       </div>
