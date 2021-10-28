@@ -1,12 +1,15 @@
 <div class='container'>
  <div class='row'>
+
     <font color="red">
+
     <% if @item.errors.any? %>
     <%= @item.errors.count %>error prohibited this obj from being saved:
     <% @item.errors.full_messages.each do |message| %>
     <%= message %>
     <% end %>
     <% end %>
+
     </font>
 
     <div class='container'>
@@ -48,6 +51,7 @@
 
         <tr>
           <th>販売ステータス</th>
+
           <th>
             <%= f.radio_button :is_active, :販売中, checked: "checked" %>
             <%= f.label :販売中, class: "is_active_label" %>
@@ -55,6 +59,7 @@
             <%= f.label :販売停止中, class: "is_active_label" %>
           </th>
         </tr>
+
 
         <tr>
           <th>
@@ -65,6 +70,7 @@
 
     </div>
     </table>
+
     </div>
   </div>
 </div>

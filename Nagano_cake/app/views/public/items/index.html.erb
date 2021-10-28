@@ -1,5 +1,6 @@
 <div class='container px-5 px-sm-0'>
 
+
   <div class="mb-4">
     <b><font size="5">商品一覧</font></b>
     <font size="3">(全<%=@items.count %>件)</font>
@@ -12,16 +13,21 @@
           <%= attachment_image_tag item, :image, :size => '150x100' %>
 
             <div class="mb-2">
+
               <font size="2">
                 <%= item.name %>
               </font>
             </div>
 
+
             <div class="mb-4">
+
               <font size="2">
                 ￥<%= (item.price*1.08).round.to_s(:delimited) %>(税込)
               </font>
             </div>
+
+
 
 
 

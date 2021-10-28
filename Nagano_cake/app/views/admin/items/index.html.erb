@@ -4,7 +4,7 @@
 
   <div class='container px-3 px-sm-3'>
 
-    
+
         <div>
           <div class="container">
             <div class="row">
@@ -17,7 +17,9 @@
 
               </div>
               <div class="col-sm-3">
+
                 <%= link_to new_admin_item_path, data: {"turbolinks" => false} do %><i class="fa fa-plus-circle",  style="font-size:30px"></i><%end%>
+
               </div>
             </div>
           </div>
@@ -44,12 +46,14 @@
                   <td><%= item.price.to_s(:delimited)%></td>
                   <td><%= item.genre.name if item.genre.present? %></td>
 
+
                   <td><% if item.is_active == "販売中" %>
                     <div class="text-success"><%= item.is_active %></div>
                     <%else%>
                     <div class="text-secondary"><%= item.is_active %></div>
                     <%end%>
                   </td>
+
 
                   </tr>
                 <%end%>

@@ -21,6 +21,7 @@ PER = 10
     else
 
       @genre = Genre.all
+
       render:new
     end
   end
@@ -45,7 +46,9 @@ PER = 10
       redirect_to admin_item_path(@item.id)
     else
 
+
       @genre = Genre.all
+
       render :edit
     end
   end
