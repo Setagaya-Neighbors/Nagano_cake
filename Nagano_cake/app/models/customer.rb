@@ -4,8 +4,8 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :postal_code, length: {maximum: 7}
-  validates :phone_number, length: {minimum: 8,maximum: 9}
+  validates :postal_code, length: {is: 7}
+  validates :phone_number, length: {minimum: 8,maximum: 10}
 
 
   #　アソシエーション
